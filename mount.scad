@@ -32,7 +32,7 @@ difference() {
     hull() {
       for( a = [-1,1] ) {
         for( b = [-1,1] ) {
-          translate([piOffsetX, piOffsetY, 0])
+          translate([piOffsetX, -piOffsetY, 0])
           translate( [ a * -raspberrypiHoleX/2 + a * -outerOffset, b * -raspberrypiHoleY/2 + b * -outerOffset, 0 ] )
           translate( [ a * outerCornerRadius/2, b * outerCornerRadius/2, 0 ] )
           circle( d = outerCornerRadius, center = true, $fn = 20 );
@@ -57,7 +57,7 @@ difference() {
     /* lower board holes */
     for( a = [-1,1] ) {
       for( b = [-1,1] ) {
-        translate([piOffsetX, piOffsetY, 0])
+        translate([piOffsetX, -piOffsetY, 0])
         translate([ a * raspberrypiHoleX/2 , b * raspberrypiHoleY/2 , 0 ])
         circle( d = 3.9, $fn = 20 );
       }
@@ -67,7 +67,7 @@ difference() {
     hull() {
       for( a = [-1,1] ) {
         for( b = [-1,1] ) {
-          translate([piOffsetX, piOffsetY, 0])
+          translate([piOffsetX, -piOffsetY, 0])
           translate( [ ( a * ( raspberrypiHoleX/2 - innerCornerRadius-2.5 ) ), ( b * ( raspberrypiHoleY/2 - innerCornerRadius-2.5 ) ), 0 ] )
           circle( r = innerCornerRadius, center = true, $fn = 20 );
         }
@@ -83,7 +83,7 @@ for( a = [-1,1] ) {
   for( b = [-1,1] ) {
 
     /* position the stand offs */
-    translate([piOffsetX, piOffsetY, 0])
+    translate([piOffsetX, -piOffsetY, 0])
     translate([ a * raspberrypiHoleX/2 , b * raspberrypiHoleY/2 ,standOffBoardHeight ])
     linear_extrude( raspberrypiStandOffHeight )
     difference() {

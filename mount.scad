@@ -1,71 +1,77 @@
 
 boxPostsDistance = 90;
 
-raspberrypiHoleWidth = 58;
-raspberrypiHoleHeight = 49;
+raspberrypiHoleX = 58;
+raspberrypiHoleY = 49;
 
 raspberrypiStandOffHeight = 2.5;
 
 standOffBoardHeight = 3;
 
-cornerRadius = 8;
+innerCornerRadius = 4;
+outerCornerRadius = 10;
 
-linear_extrude( standOffBoardHeight ) {
+outerOffset = 6;
 
-  /* support board wings */
-  for( a = [-1,0,1] ) {
-    for( b = [-1,0,1] ) {
-      if( a != b && a != b*-1 ) {
-        difference() {
-          translate([ ( ( a * ( boxPostsDistance/4 + 17 ) ) ), ( ( b * ( boxPostsDistance/4 + 17 ) ) ),0])
-          square( [ ( a != 0 ? boxPostsDistance/4 - 2 : 10 ) , ( b != 0 ? boxPostsDistance/4 - 2 : 10 )  ], center = true );
+/*piOffsetX = 7;*/
+/*piOffsetY = 10;*/
+piOffsetX = boxPostsDistance/2 - raspberrypiHoleX/2 - 10;
+piOffsetY = boxPostsDistance/2 - raspberrypiHoleY/2 - 10;
 
-          translate([ a * ( boxPostsDistance / 2 ), b * ( boxPostsDistance / 2 ), 0 ])
-          circle( d = 3.9, $fn = 20 );
+linear_extrude( standOffBoardHeight )
+difference() {
+
+
+  union() {
+    /* support board wings */
+    for( a = [0,1] ) {
+      rotate([0,0,a*90])
+      square( [ boxPostsDistance + 10 , 10 ], center = true );
+    }
+
+    hull() {
+      for( a = [-1,1] ) {
+        for( b = [-1,1] ) {
+          translate([piOffsetX, piOffsetY, 0])
+          translate( [ a * -raspberrypiHoleX/2 + a * -outerOffset, b * -raspberrypiHoleY/2 + b * -outerOffset, 0 ] )
+          translate( [ a * outerCornerRadius/2, b * outerCornerRadius/2, 0 ] )
+          circle( d = outerCornerRadius, center = true, $fn = 20 );
         }
       }
     }
+
   }
 
+  union() {
 
-  /* central support board */
-  /*union() {*/
-  difference() {
-
-    square( [ raspberrypiHoleWidth+10, raspberrypiHoleHeight+10 ], center = true);
-
-    union() {
-      difference() {
-        square( [ raspberrypiHoleWidth-5, raspberrypiHoleHeight-5 ], center = true);
-        union() {
-          for( a = [-1,1] ) {
-            for( b = [-1,1] ) {
-
-              union() {
-
-                translate( [ ( a * ( raspberrypiHoleWidth/2 - cornerRadius-2.5 ) ), ( b * ( raspberrypiHoleHeight/2 - cornerRadius-2.5 ) ), 0 ] )
-
-                difference() {
-                  translate([ a * cornerRadius/2, b * cornerRadius/2,0])
-                  square( [cornerRadius,cornerRadius], center = true );
-                  circle( cornerRadius, center = true );
-                }
-
-              }
-
-            }
-          }
-
-        }
+    /*support board wing holes */
+    for( a = [0,1] ) {
+      rotate([0,0,a*90]) {
+        translate([ ( boxPostsDistance / 2 ), 0, 0 ])
+        circle( d = 3.9, $fn = 20 );
+        translate([ ( - boxPostsDistance / 2 ), 0, 0 ])
+        circle( d = 3.9, $fn = 20 );
       }
+    }
 
+    /* lower board holes */
+    for( a = [-1,1] ) {
+      for( b = [-1,1] ) {
+        translate([piOffsetX, piOffsetY, 0])
+        translate([ a * raspberrypiHoleX/2 , b * raspberrypiHoleY/2 , 0 ])
+        circle( d = 3.9, $fn = 20 );
+      }
+    }
+
+    /* central support board */
+    hull() {
       for( a = [-1,1] ) {
         for( b = [-1,1] ) {
-          translate([ a * raspberrypiHoleWidth/2 , b * raspberrypiHoleHeight/2 , 0 ])
-          circle( d = 3.9, $fn = 20 );
+          translate([piOffsetX, piOffsetY, 0])
+          translate( [ ( a * ( raspberrypiHoleX/2 - innerCornerRadius-2.5 ) ), ( b * ( raspberrypiHoleY/2 - innerCornerRadius-2.5 ) ), 0 ] )
+          circle( r = innerCornerRadius, center = true, $fn = 20 );
         }
       }
-
     }
 
   }
@@ -77,7 +83,8 @@ for( a = [-1,1] ) {
   for( b = [-1,1] ) {
 
     /* position the stand offs */
-    translate([ a * raspberrypiHoleWidth/2 , b * raspberrypiHoleHeight/2 ,standOffBoardHeight ])
+    translate([piOffsetX, piOffsetY, 0])
+    translate([ a * raspberrypiHoleX/2 , b * raspberrypiHoleY/2 ,standOffBoardHeight ])
     linear_extrude( raspberrypiStandOffHeight )
     difference() {
       circle( d = 6.5, $fn = 20 );

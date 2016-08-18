@@ -4,7 +4,7 @@ boxPostsDistance = 90;
 raspberrypiHoleX = 58;
 raspberrypiHoleY = 49;
 
-raspberrypiStandOffHeight = 2.5;
+raspberrypiStandOffHeight = 5;
 
 standOffBoardHeight = 3;
 

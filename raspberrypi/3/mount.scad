@@ -1,5 +1,5 @@
 
-boxPostsDistance = 90;
+boxPostsDistance = 92;
 
 raspberrypiHoleX = 58;
 raspberrypiHoleY = 49;
@@ -48,9 +48,9 @@ difference() {
     for( a = [0,1] ) {
       rotate([0,0,a*90]) {
         translate([ ( boxPostsDistance / 2 ), 0, 0 ])
-        circle( d = 3.9, $fn = 20 );
+        circle( d = 4.5, $fn = 20 );
         translate([ ( - boxPostsDistance / 2 ), 0, 0 ])
-        circle( d = 3.9, $fn = 20 );
+        circle( d = 4.5, $fn = 20 );
       }
     }
 

@@ -11,7 +11,10 @@ cameraBoardY = 24;
 cameraBoardZ = 1;
 cameraBoardHoleDiameter = 2;
 
-cameraModuleOffsetY = 2.5;
+/*cameraHole = 15;*/
+cameraHole = 19;
+
+cameraModuleOffsetY = 2.75;
 
 cameraLensDiameter = 14;
 cameraLensHeight = 20;
@@ -19,6 +22,7 @@ cameraLensHeight = 20;
 translate([0,0,( cameraBoardFromBoxWall  - 1 )])
 mirror([0,0,1]) {
 
+  translate([0,-cameraModuleOffsetY,0])
   %union() {
     linear_extrude( cameraBoardZ ) {
       difference() {
@@ -82,11 +86,11 @@ mirror([0,0,1]) {
     cube([headerX,headerY,headerZ], center = true);
 
     /* box to mount to with camera sticking through */
-    translate([0,cameraModuleOffsetY, cameraBoardFromBoxWall-1])
+    translate([0,cameraModuleOffsetY,cameraBoardFromBoxWall-1])
     linear_extrude( 3 ) {
       difference() {
         square(size=[cameraBoardX*2,cameraBoardY*2], center=true);
-        circle(d=19, center = true, $fn = 20 );
+        circle(d=cameraHole, center = true, $fn = 20 );
       }
     }
 
@@ -94,7 +98,7 @@ mirror([0,0,1]) {
 
   mountWidth = 3;
   mountLength = 17.5;
-  translate([0,0,cameraBoardZ])
+  translate([0,-cameraModuleOffsetY,cameraBoardZ])
   union() {
     translate([0,cameraModuleOffsetY, ( cameraBoardFromBoxWall - cameraBoardZ - mountDepth - 1 )])
     linear_extrude( mountDepth ) {
@@ -105,7 +109,7 @@ mirror([0,0,1]) {
           hull() {
             for( t = [-1,1]) {
               for( i = [-1,1]) {
-                translate([i*20,( (cameraBoardY + cameraModuleOffsetY*2)/2 - 5.5 )*t,0])
+                translate([i*20,( (cameraBoardY + 5)/2 - 5.5 )*t,0])
                 circle( d = 10, $fn = 20, center = true );
               }
             }
@@ -114,11 +118,11 @@ mirror([0,0,1]) {
         }
 
         union() {
-          circle(d=19, center = true, $fn = 40 );
+          circle(d=cameraHole, center = true, $fn = 40 );
 
           for( t = [-1,1]) {
             for( i = [-1,1]) {
-              translate([i*20,( (cameraBoardY + cameraModuleOffsetY*2)/2 - 5.5 )*t,0])
+              translate([i*20,( (cameraBoardY + 5)/2 - 5.5 )*t,0])
               circle( d = 4.5, $fn = 20, center = true );
             }
           }

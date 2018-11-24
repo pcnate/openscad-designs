@@ -11,10 +11,10 @@ outerCornerRadius = 10;
 
 outerOffset = 6;
 
-piModelOffsetZ = 0;
+piModel = 3;
 showBolts = 0;
 showPi = 0;
-piModel = 3;
+piModelOffsetZ = 0;
 
 function getPiOffsetX() = piModel==0
   ? boxPostsDistanceX/2 - raspberrypiHoleX/2 - 26.75

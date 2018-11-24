@@ -1,4 +1,6 @@
 
+piModel = 3;
+
 boxPostsDistanceX = 92;
 boxPostsDistanceY = 92;
 
@@ -11,7 +13,6 @@ outerCornerRadius = 10;
 
 outerOffset = 6;
 
-piModel = 3;
 showBolts = 0;
 showPi = 0;
 piModelOffsetZ = 0;
